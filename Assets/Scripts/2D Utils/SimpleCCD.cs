@@ -28,8 +28,8 @@ public class SimpleCCD : MonoBehaviour
 		// min & max has to be between 0 ... 360
 		foreach (var node in angleLimits)
 		{
-			node.min = Mathf.Clamp (node.min, 0, 360);
-			node.max = Mathf.Clamp (node.max, 0, 360);
+			//node.min = Mathf.Clamp (node.min, 0, 360);
+			//node.max = Mathf.Clamp (node.max, 0, 360);
 		}
 	}
      Transform FindChildNode(Transform parent, Transform endTransform)
@@ -125,6 +125,15 @@ public class SimpleCCD : MonoBehaviour
 	float ClampAngle (float angle, float min, float max)
 	{
 		angle = Mathf.Abs((angle % 360) + 360) % 360;
-		return Mathf.Clamp(angle, min, max);
+        if(min < 0f)
+        {
+            float minAngle = min + 360;
+            if (angle < minAngle)
+                return Mathf.Clamp(angle, 0f, max);
+            else
+                return Mathf.Clamp(angle, minAngle, 360f);
+        }
+        else
+		    return Mathf.Clamp(angle, min, max);
 	}
 }
