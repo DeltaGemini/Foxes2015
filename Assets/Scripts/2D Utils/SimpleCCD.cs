@@ -21,6 +21,7 @@ public class SimpleCCD : MonoBehaviour
 		public Transform Transform;
 		public float min;
 		public float max;
+        public float offset;
 	}
 
 	void OnValidate()
@@ -30,8 +31,22 @@ public class SimpleCCD : MonoBehaviour
 		{
 			node.min = Mathf.Clamp (node.min, 0, 360);
 			node.max = Mathf.Clamp (node.max, 0, 360);
+            if (node.Transform != null)
+            {
+                Vector3 toChild = FindChildNode(node.Transform, endTransform).position - node.Transform.position;
+                node.offset = Vector3.Angle(node.Transform.parent ? -node.Transform.parent.up : Vector3.down, toChild);
+            }
+            else
+                node.offset = 0f;
 		}
 	}
+     Transform FindChildNode(Transform parent, Transform endTransform)
+    {
+        if (endTransform.parent != parent)
+            return FindChildNode(parent, endTransform.parent); ;
+
+        return endTransform;
+    }
 
 	void Start()
 	{
