@@ -26,11 +26,11 @@ public class SimpleCCD : MonoBehaviour
 	void OnValidate()
 	{
 		// min & max has to be between 0 ... 360
-		foreach (var node in angleLimits)
+		/*foreach (var node in angleLimits)
 		{
 			node.min = Mathf.Clamp (node.min, 0, 360);
 			node.max = Mathf.Clamp (node.max, 0, 360);
-		}
+		}*/
 	}
 
 	void Start()
