@@ -30,9 +30,9 @@ public class SimpleCCDEditor
                 float discSize = handleSize * gizmoSize;
 
 
-                float parentRotation = transform.parent ? transform.parent.eulerAngles.z : 0;
-                Vector3 min = Quaternion.Euler(0, 0, node.min + parentRotation) * Vector3.down;
-                Vector3 max = Quaternion.Euler(0, 0, node.max + parentRotation) * Vector3.down;
+                float parentRotation = transform.parent ? transform.parent.eulerAngles.z : 0f;
+                Vector3 min = Quaternion.Euler(0, 0, node.min + parentRotation + node.offset ) * Vector3.down;
+                Vector3 max = Quaternion.Euler(0, 0, node.max + parentRotation + node.offset ) * Vector3.down;
 
                 Handles.color = new Color(0, 1, 0, 0.1f);
                 Handles.DrawWireDisc(position, Vector3.back, discSize);
