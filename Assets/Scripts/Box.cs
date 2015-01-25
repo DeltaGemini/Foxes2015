@@ -33,7 +33,7 @@ public class Box : Occupant
         }
         else
         {
-            rigidbody2D.isKinematic = false;
+            //rigidbody2D.isKinematic = false;
         }
 
         yield return null;
