@@ -7,20 +7,26 @@ public class FoxController : MonoBehaviour
 {
     public int startX;
     public int startY;
+
+    public Vector2 rootOffset = new Vector2(0.5f, 0.25f);
+
     public Direction movingDirection = Direction.right;
 
     private int x;
     private int y;
     private Grid grid;
-
-
+    private Animator animator;
+    int jumpUpHash = Animator.StringToHash("jumpUp");
+    int jumpDownHash = Animator.StringToHash("jumpDown");
+    //int runStateHash = Animator.StringToHash("Base Layer.Run");
 
     void Start()
     {
         x = startX;
         y = startY;
-        transform.position = new Vector3(startX + 0.5f, startY, 0f);
+        transform.position = new Vector3(startX + rootOffset.x, startY + rootOffset.y, 0f);
         grid = FindObjectOfType<Grid>();
+        animator = GetComponentInChildren<Animator>();
 
         StartCoroutine(MakeNextMove());
     }
@@ -59,7 +65,7 @@ public class FoxController : MonoBehaviour
     {
         float t = 0f;
         Vector3 initialPos = transform.position;
-        Vector3 destination = new Vector3(nextTile.x + 0.5f, nextTile.y, 0f);
+        Vector3 destination = new Vector3(nextTile.x + rootOffset.x, nextTile.y + rootOffset.y, 0f);
 
         while(t < action.time)
         {
@@ -76,7 +82,9 @@ public class FoxController : MonoBehaviour
     {
         float t = 0f;
         Vector3 initialPos = transform.position;
-        Vector3 destination = new Vector3(nextTile.x + 0.5f, nextTile.y, 0f);
+        Vector3 destination = new Vector3(nextTile.x + rootOffset.x, nextTile.y + rootOffset.y, 0f);
+
+        animator.SetTrigger(nextTile.y > this.y ? jumpUpHash : jumpDownHash);
 
         while (t < action.time)
         {
